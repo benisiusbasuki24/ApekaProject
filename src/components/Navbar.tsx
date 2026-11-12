@@ -84,6 +84,23 @@ export const Navbar: React.FC<NavbarProps> = ({
           >
             Analitik Bisnis
           </button>
+
+          {isAdmin && (
+            <button
+              onClick={() => onTabChange('superadmin')}
+              className={`whitespace-nowrap shrink-0 transition-colors py-1 flex items-center gap-1.5 font-bold ${
+                currentTab === 'superadmin' 
+                  ? 'text-cyan-400 border-b-2 border-cyan-400 pb-0.5' 
+                  : 'text-violet-400 hover:text-violet-300'
+              }`}
+            >
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>Superadmin</span>
+              <span className="text-[9px] bg-violet-500/20 text-violet-300 font-black px-1.5 py-0.2 rounded">
+                KONTROL
+              </span>
+            </button>
+          )}
         </nav>
 
         {/* Zone 3: Actions + Auth Profile */}

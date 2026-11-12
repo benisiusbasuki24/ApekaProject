@@ -36,6 +36,9 @@ import {
   AuthModal 
 } from './components/AuthModal';
 import { 
+  SuperadminPanel 
+} from './components/SuperadminPanel';
+import { 
   WebAppProduct, 
   BillingCycle, 
   SubscriptionItem, 
@@ -392,6 +395,19 @@ export default function App() {
               <BellRing className="w-3 h-3" />
               <span>Pengingat ({subscriptions.filter(s => s.daysRemaining <= 10).length})</span>
             </button>
+
+            {isAdmin && (
+              <>
+                <span className="text-slate-700 hidden sm:inline">|</span>
+                <button
+                  onClick={() => setCurrentTab('superadmin')}
+                  className="text-violet-400 hover:text-violet-300 font-bold text-[11px] flex items-center gap-1 transition-colors bg-violet-500/10 px-2 py-0.5 rounded-lg border border-violet-500/20"
+                >
+                  <ShieldCheck className="w-3 h-3" />
+                  <span>Panel Superadmin</span>
+                </button>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -523,6 +539,18 @@ export default function App() {
             />
           </div>
         )}
+
+        {/* Tab 6: Superadmin Control Panel (Dedicated Panel Pelanggan & Kontrol Aplikasi) */}
+        {currentTab === 'superadmin' && (
+          <div className="py-8 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <SuperadminPanel
+              subscriptions={subscriptions}
+              products={products}
+              onShowToast={showToast}
+              onSendReminder={handleSendManualReminder}
+            />
+          </div>
+        )}
       </main>
 
       {/* Footer */}
@@ -596,16 +624,25 @@ export default function App() {
       </footer>
 
       {/* Floating Status & Quick Role Switch */}
-      <div className="fixed bottom-4 left-4 z-40 bg-slate-900/90 backdrop-blur-md border border-slate-800 px-3 py-1.5 rounded-full shadow-lg flex items-center gap-2 text-xs">
+      <div className="fixed bottom-4 left-4 z-40 bg-slate-900/95 backdrop-blur-md border border-slate-800 px-3.5 py-2 rounded-full shadow-2xl flex items-center gap-2.5 text-xs">
         <span className={`w-2 h-2 rounded-full ${isAdmin ? 'bg-violet-400 animate-pulse' : 'bg-cyan-400'}`} />
         <span className="text-slate-300 font-medium">
-          {isAdmin ? 'Mode: Admin Apeka' : 'Mode: Klien / Pengguna'}
+          {isAdmin ? 'Mode: Superadmin Apeka' : 'Mode: Klien / Pengguna'}
         </span>
         <button
-          onClick={() => setIsAdmin(!isAdmin)}
+          onClick={() => {
+            const nextAdmin = !isAdmin;
+            setIsAdmin(nextAdmin);
+            if (nextAdmin) setCurrentTab('superadmin');
+            else if (currentTab === 'superadmin') setCurrentTab('katalog');
+            showToast(
+              `Beralih ke ${nextAdmin ? 'Mode Superadmin' : 'Mode Klien'}`,
+              nextAdmin ? 'Panel Superadmin aktif dengan kontrol penuh atas seluruh aplikasi.' : 'Tampilan disesuaikan untuk pelanggan.'
+            );
+          }}
           className="text-cyan-400 hover:text-cyan-300 font-bold ml-1 underline text-[11px]"
         >
-          Ganti
+          {isAdmin ? 'Ubah ke Klien' : 'Ubah ke Superadmin'}
         </button>
       </div>
 

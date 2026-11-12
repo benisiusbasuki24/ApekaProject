@@ -344,3 +344,31 @@ export async function saveITAssetToFirestore(asset: ITAsset) {
     handleFirestoreError(error, OperationType.WRITE, `it_assets/${asset.id}`);
   }
 }
+
+// Superadmin Functions for Firestore
+export async function deleteSubscriptionFromFirestore(subId: string) {
+  try {
+    const { deleteDoc } = await import('firebase/firestore');
+    await deleteDoc(doc(db, 'subscriptions', subId));
+  } catch (error) {
+    handleFirestoreError(error, OperationType.DELETE, `subscriptions/${subId}`);
+  }
+}
+
+export async function updateSubscriptionInFirestore(subId: string, updates: Partial<SubscriptionItem>) {
+  try {
+    await updateDoc(doc(db, 'subscriptions', subId), updates);
+  } catch (error) {
+    handleFirestoreError(error, OperationType.UPDATE, `subscriptions/${subId}`);
+  }
+}
+
+export async function deleteProjectFromFirestore(projId: string) {
+  try {
+    const { deleteDoc } = await import('firebase/firestore');
+    await deleteDoc(doc(db, 'projects', projId));
+  } catch (error) {
+    handleFirestoreError(error, OperationType.DELETE, `projects/${projId}`);
+  }
+}
+

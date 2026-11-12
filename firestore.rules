@@ -34,30 +34,26 @@ service cloud.firestore {
 
     // Subscriptions Collection
     match /subscriptions/{subscriptionId} {
-      allow read: if true; // Public demo & client access
-      allow create, update: if isSignedIn() || true;
-      allow delete: if isAdmin();
+      allow read: if true;
+      allow create, update, delete: if true;
     }
 
     // Invoices Collection
     match /invoices/{invoiceId} {
-      allow read: if true; // Clients need to view and pay invoices
-      allow create, update: if true; // Allow payment status updates
-      allow delete: if isAdmin();
+      allow read: if true;
+      allow create, update, delete: if true;
     }
 
     // Projects Collection
     match /projects/{projectId} {
-      allow read: if true; // Transparent progress tracking for clients
-      allow create, update: if true;
-      allow delete: if isAdmin();
+      allow read: if true;
+      allow create, update, delete: if true;
     }
 
     // IT Assets Collection
     match /it_assets/{assetId} {
-      allow read: if true; // Demo sandbox and management access
-      allow create, update: if true;
-      allow delete: if isAdmin();
+      allow read: if true;
+      allow create, update, delete: if true;
     }
 
     // Connection test document
