@@ -1,0 +1,138 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User profile with authentication and role information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "institution": { "type": "string" },
+        "phone": { "type": "string" },
+        "role": { "type": "string", "enum": ["client", "admin"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Subscription": {
+      "title": "Subscription",
+      "description": "Customer web app subscription",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "clientName": { "type": "string" },
+        "clientEmail": { "type": "string" },
+        "clientPhone": { "type": "string" },
+        "institutionName": { "type": "string" },
+        "productId": { "type": "string" },
+        "productName": { "type": "string" },
+        "billingCycle": { "type": "string" },
+        "pricePaid": { "type": "number" },
+        "startDate": { "type": "string" },
+        "endDate": { "type": "string" },
+        "daysRemaining": { "type": "number" },
+        "status": { "type": "string" },
+        "autoRenew": { "type": "boolean" },
+        "customDomain": { "type": "string" }
+      },
+      "required": ["id", "clientEmail", "institutionName", "productId", "billingCycle"]
+    },
+    "Invoice": {
+      "title": "Invoice",
+      "description": "Billing and payment invoice",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "invoiceNumber": { "type": "string" },
+        "userId": { "type": "string" },
+        "clientName": { "type": "string" },
+        "clientEmail": { "type": "string" },
+        "clientPhone": { "type": "string" },
+        "institutionName": { "type": "string" },
+        "productName": { "type": "string" },
+        "billingCycle": { "type": "string" },
+        "issueDate": { "type": "string" },
+        "dueDate": { "type": "string" },
+        "paidDate": { "type": "string" },
+        "subtotal": { "type": "number" },
+        "discount": { "type": "number" },
+        "tax": { "type": "number" },
+        "totalAmount": { "type": "number" },
+        "status": { "type": "string" },
+        "paymentMethod": { "type": "string" },
+        "referenceNumber": { "type": "string" }
+      },
+      "required": ["id", "invoiceNumber", "totalAmount", "status"]
+    },
+    "Project": {
+      "title": "Client Project",
+      "description": "Customization & deployment progress tracking",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "projectName": { "type": "string" },
+        "clientName": { "type": "string" },
+        "institution": { "type": "string" },
+        "productId": { "type": "string" },
+        "productName": { "type": "string" },
+        "currentPhase": { "type": "string" },
+        "progressPercent": { "type": "number" },
+        "startDate": { "type": "string" },
+        "targetGoLive": { "type": "string" },
+        "leadDeveloper": { "type": "string" },
+        "stagingUrl": { "type": "string" },
+        "customDomain": { "type": "string" }
+      },
+      "required": ["id", "projectName", "institution", "progressPercent"]
+    },
+    "ITAsset": {
+      "title": "IT Asset",
+      "description": "Hardware and IT asset tracking record",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "assetTag": { "type": "string" },
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "brandModel": { "type": "string" },
+        "serialNumber": { "type": "string" },
+        "specifications": { "type": "string" },
+        "location": { "type": "string" },
+        "department": { "type": "string" },
+        "assignedUser": { "type": "string" },
+        "purchaseDate": { "type": "string" },
+        "purchaseCost": { "type": "number" },
+        "warrantyEndDate": { "type": "string" },
+        "warrantyStatus": { "type": "string" },
+        "status": { "type": "string" },
+        "nextScheduledMaintenance": { "type": "string" },
+        "qrCodeValue": { "type": "string" }
+      },
+      "required": ["id", "assetTag", "name", "serialNumber", "category"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/User" },
+      "description": "User profiles and credentials"
+    },
+    "/subscriptions/{subscriptionId}": {
+      "schema": { "$ref": "#/entities/Subscription" },
+      "description": "Active and past subscriptions"
+    },
+    "/invoices/{invoiceId}": {
+      "schema": { "$ref": "#/entities/Invoice" },
+      "description": "Customer bills and invoices"
+    },
+    "/projects/{projectId}": {
+      "schema": { "$ref": "#/entities/Project" },
+      "description": "Development and deployment milestones"
+    },
+    "/it_assets/{assetId}": {
+      "schema": { "$ref": "#/entities/ITAsset" },
+      "description": "IT hardware inventory and warranty tracking"
+    }
+  }
+}

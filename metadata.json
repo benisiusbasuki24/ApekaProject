@@ -1,0 +1,6 @@
+{
+  "name": "apeka project - Portal Manajemen & Langganan Aplikasi Web",
+  "description": "Portal manajemen usaha pembuatan aplikasi web apeka project, pelacakan progres proyek, invoice otomatis, integrasi payment gateway lokal, sistem manajemen aset IT, dan demo interaktif.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
